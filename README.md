@@ -1,6 +1,6 @@
-# Haciendo reportes PDF con NestJs
+# Haciendo reportes PDF con NestJs y PDFmake
 
-# Ejecutar en dev
+## Ejecutar en dev
 
 - Clonar repositorio
 - Instalar dependencias con `npm install`
