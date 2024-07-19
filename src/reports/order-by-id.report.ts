@@ -69,8 +69,6 @@ interface ReportValues {
 export const orderByIdReport = (values: ReportValues): TDocumentDefinitions => {
   const { data } = values;
 
-  console.log(data);
-
   const { customers, order_details } = data;
 
   const subTotal = order_details.reduce(
