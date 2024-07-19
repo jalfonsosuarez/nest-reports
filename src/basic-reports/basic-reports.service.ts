@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrinterService } from 'src/printer/printer.service';
 
 import {
+  getCountriesReport,
   getEmploymentLetter,
   getEmploymentLetterById,
   getHelloWorldReport,
@@ -51,6 +52,28 @@ export class BasicReportsService extends PrismaClient implements OnModuleInit {
       employeeHours: employee.hours_per_day,
       employeeWorkSchedule: employee.work_schedule,
       employerCompany: 'TucanCodie',
+    });
+    const doc = this.printerService.createPdf(docDefinition);
+
+    return doc;
+  }
+
+  async getCountryReport() {
+    const countries = await this.countries.findMany({
+      where: {
+        local_name: { not: null },
+        continent: { not: null },
+      },
+    });
+
+    if (!countries) {
+      throw new NotFoundException(`There are not counties in your database.`);
+    }
+
+    const docDefinition = getCountriesReport({
+      title: 'COUNTRY REPORT',
+      subTitle: 'A list of countries',
+      countries,
     });
     const doc = this.printerService.createPdf(docDefinition);
 
