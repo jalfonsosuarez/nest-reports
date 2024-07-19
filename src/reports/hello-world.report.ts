@@ -2,6 +2,7 @@ import type { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 interface ReportParams {
   name: string;
+  id?: number;
 }
 
 export const getHelloWorldReport = (
