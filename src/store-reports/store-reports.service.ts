@@ -1,7 +1,11 @@
 import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrinterService } from 'src/printer/printer.service';
-import { orderByIdReport } from 'src/reports';
+import {
+  getBasicChartSvgReport,
+  getStatisticsReport,
+  orderByIdReport,
+} from 'src/reports';
 
 @Injectable()
 export class StoreReportsService extends PrismaClient implements OnModuleInit {
@@ -34,6 +38,37 @@ export class StoreReportsService extends PrismaClient implements OnModuleInit {
 
     // TODO:Solucionar el tipo de dato.
     const docDefinition = orderByIdReport({ data: order as any });
+
+    const doc = this.printerService.createPdf(docDefinition);
+
+    return doc;
+  }
+
+  async getSvgChart() {
+    const docDefinition = await getBasicChartSvgReport();
+
+    const doc = this.printerService.createPdf(docDefinition);
+
+    return doc;
+  }
+
+  async getStatistics() {
+    const topCountries = await this.customers.groupBy({
+      by: ['country'],
+      _count: true,
+      orderBy: {
+        _count: {
+          country: 'desc',
+        },
+      },
+      take: 10,
+    });
+
+    if (!topCountries) {
+      throw new NotFoundException(`There are not data for countries.`);
+    }
+
+    const docDefinition = await getStatisticsReport();
 
     const doc = this.printerService.createPdf(docDefinition);
 
