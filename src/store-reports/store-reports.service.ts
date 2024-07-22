@@ -68,7 +68,14 @@ export class StoreReportsService extends PrismaClient implements OnModuleInit {
       throw new NotFoundException(`There are not data for countries.`);
     }
 
-    const docDefinition = await getStatisticsReport();
+    const topCountryData = topCountries.map(({ country, _count }) => ({
+      country: country,
+      customers: _count,
+    }));
+
+    const docDefinition = await getStatisticsReport({
+      topCountries: topCountryData,
+    });
 
     const doc = this.printerService.createPdf(docDefinition);
 

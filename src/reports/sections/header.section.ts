@@ -13,7 +13,8 @@ const currentDate: Content = {
   text: DateFormater.getDDMMMMYYYY(new Date()),
   alignment: 'right',
   margin: [20, 30, 20, 20],
-  width: 150,
+  width: 100,
+  fontSize: 12,
 };
 interface HeaderOptions {
   title?: string;
@@ -34,7 +35,6 @@ export const headerSection = (options: HeaderOptions): Content => {
         margin: [0, 2, 0, 6],
         style: {
           fontSize: 16,
-          bold: true,
         },
       }
     : null;
