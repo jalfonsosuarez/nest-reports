@@ -5,6 +5,8 @@ export * from './countries.report';
 export * from './order-by-id.report';
 export * from './basic-chart-svg.report';
 export * from './statistics.report';
+export * from './comunity.report';
+export * from './custom.size.report';
 
 export * from './sections/header.section';
 export * from './sections/footer.section';
